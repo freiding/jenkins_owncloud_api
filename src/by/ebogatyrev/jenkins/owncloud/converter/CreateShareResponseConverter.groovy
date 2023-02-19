@@ -2,8 +2,6 @@ package by.ebogatyrev.jenkins.owncloud.converter
 
 import by.ebogatyrev.jenkins.owncloud.model.share.CreateShareResponse
 
-import groovy.xml.XmlSlurper
-
 class CreateShareResponseConverter {
 
     static CreateShareResponse convertXmlToCreateShareResponse(String xmlResponse) {
