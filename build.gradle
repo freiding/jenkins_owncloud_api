@@ -1,0 +1,63 @@
+plugins {
+    // Apply the groovy Plugin to add support for Groovy.
+    id 'groovy'
+}
+
+// follow the structure as dictated by Jenkins:
+sourceSets {
+    main {
+        groovy {
+            srcDirs = ['src','vars']
+        }
+        resources {
+            srcDirs = ['resources']
+        }
+    }
+    test {
+        groovy {
+            srcDirs = ['test']
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.codehaus.groovy:groovy-all:3.0.13'
+
+    testImplementation 'org.spockframework:spock-core:2.2-groovy-3.0'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+
+test {
+    dependsOn cleanTest
+
+    // don't stop if tests fail
+    ignoreFailures = true
+
+    // minimize logging
+    testLogging.maxGranularity = 0
+
+    // show stdout from tests
+    onOutput { dest, event -> print event.message }
+
+    // show test results
+    def results = []
+
+    afterTest { desc, result -> println "${desc.className.split("\\.")[-1]}: ${desc.name}: ${result.resultType}" }
+    afterSuite { desc, result ->
+        if (desc.className) {
+            results << result
+        }
+    }
+
+    // show summary
+    doLast {
+        println "Tests: ${results.sum { it.testCount }}, Failures: ${results.sum { it.failedTestCount }}" +
+                ", Errors: ${results.sum { it.exceptions.size() }}, Skipped: ${results.sum { it.skippedTestCount }}"
+    }
+
+}

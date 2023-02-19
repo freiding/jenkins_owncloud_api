@@ -1,0 +1,4 @@
+class TestConfig {
+    static final String OWNCLOUD_HOST = ""
+    static final String OWNCLOUD_AUTH_TOKEN = ""
+}
