@@ -12,9 +12,27 @@ class OwncloudApiTest {
     }
 
     @Test
+    void uploadFileTest() {
+        def file = new File("test/samples/file.txt");
+        api.upload(file, "freiding/tmp/file.txt")
+    }
+
+    @Test
     void createSharePublicLinkTest() {
-        def result = api.createShareLink("/docker-compose.yml", "shareName")
-        assertEquals(result.name, "shareName")
+        def remotePath = "freiding/tmp/file.txt"
+        def shareName = "File to Share"
+        def result = api.createShareLink(remotePath, shareName)
+        assertEquals(result.name, shareName)
         assert result.url != null && result.url.length() > 0
+    }
+
+    @Test
+    void deleteFileTest() {
+        api.delete("freiding/tmp/file.txt")
+    }
+
+    @Test
+    void createDirTest() {
+        api.createDir("freiding/temp/builds/48")
     }
 }
