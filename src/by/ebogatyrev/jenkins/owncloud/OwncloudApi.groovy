@@ -38,6 +38,11 @@ class OwncloudApi {
 
     }
 
+    def upload(String localPath, String remoteFilePath) {
+        def file = new File(localPath)
+        upload(file, remoteFilePath)
+    }
+
     def delete(String remotePath) {
         def endpoint = "remote.php/dav/files"
 

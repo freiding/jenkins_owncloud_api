@@ -18,6 +18,11 @@ class OwncloudApiTest {
     }
 
     @Test
+    void uploadFileByPathTest() {
+        api.upload("test/samples/file.txt", "freiding/tmp/file.txt")
+    }
+
+    @Test
     void createSharePublicLinkTest() {
         def remotePath = "freiding/tmp/file.txt"
         def shareName = "File to Share"
